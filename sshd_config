@@ -1,0 +1,32 @@
+Port 2222
+ListenAddress 0.0.0.0
+PidFile /workspace/etc/ssh/sshd.pid
+
+HostKey /workspace/etc/ssh/ssh_host_rsa_key
+HostKey /workspace/etc/ssh/ssh_host_ecdsa_key
+HostKey /workspace/etc/ssh/ssh_host_ed25519_key
+
+LoginGraceTime 1m
+PermitRootLogin no
+#StrictModes yes
+MaxAuthTries 1
+
+PubkeyAuthentication yes
+
+AuthorizedKeysFile	.ssh/authorized_keys
+PasswordAuthentication no
+PermitEmptyPasswords no
+
+#AllowAgentForwarding yes
+AllowTcpForwarding yes
+GatewayPorts no
+X11Forwarding no
+PermitTTY no
+PrintMotd no
+TCPKeepAlive yes
+ClientAliveInterval 60
+ClientAliveCountMax 3
+PermitUserEnvironment no
+
+# override default of no subsystems
+Subsystem	sftp	internal-sftp
