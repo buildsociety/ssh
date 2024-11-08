@@ -1,0 +1,91 @@
+# Security Policy
+
+## Reporting a Vulnerability
+
+If you have identified a security vulnerability in one of our images please email `security@buildsociety.org` with your findings. We strongly recommend using our `PGP key` to prevent this information from falling into the wrong hands.
+
+### Disclosure Policy
+
+Upon receipt of a security report the following steps will be taken:
+
+- Acknowledge your report within 72 hours, and provide a further more detailed update within 72 hours.
+- Confirm the problem and determine the affected versions
+- Keep you informed of the progress towards resolving the problem and notify you when the vulnerability has been fixed.
+- Audit code to find any potential similar problems.
+- Prepare fixes for all releases still under maintenance. These fixes will be released as fast as possible.
+- Handle your report with strict confidentiality, and not pass on your personal details to third parties without your permission.
+
+Whilst the issue is under investigation
+
+- **Do** provide as much information as possible.
+- **Do not** exploit of the vulnerability or problem you have discovered.
+- **Do not** reveal the problem to others until it has been resolved.
+
+### PGP Public Key
+
+```
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+ugx7iTahfQkKjsIq/3ad1Q==
+=Ht9S
+-----END PGP PUBLIC KEY BLOCK-----
+```

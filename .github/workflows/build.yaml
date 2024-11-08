@@ -1,4 +1,4 @@
-name: build
+name: Build Container and Push to GitHub Container Registry
 
 on:
   push:
@@ -8,11 +8,15 @@ on:
       - '*'
     paths-ignore:
       - '**.md'
+      - '.github/**'
+      - 'LICENSE'
   pull_request:
     branches:
       - 'main'
     paths-ignore:
       - '**.md'
+      - '.github/**'
+      - 'LICENSE'
   schedule:
     - cron: "0 0 * * *"
   workflow_dispatch:
@@ -20,17 +24,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        platforms:
-          - linux/amd64
-          - linux/arm/v6
-          - linux/arm/v7
-          - linux/arm64
-          - linux/386
-          - linux/ppc64le
-          - linux/s390x
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -52,8 +45,17 @@ jobs:
         with:
           context: .
           file: Dockerfile
-          platforms: ${{ matrix.platforms }}
+          platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           push: true
           tags: |
             ghcr.io/buildsociety/${{ github.event.repository.name }}:latest
             ghcr.io/buildsociety/${{ github.event.repository.name }}:${{ github.sha }}
+          annotations: |
+            org.opencontainers.image.title=SSH Server
+            org.opencontainers.image.description=A simple SSH server from Build Society
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.created=${{ github.event.head_commit.timestamp }}
+          provenance: true
+          sbom: true
+

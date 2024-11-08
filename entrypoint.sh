@@ -1,13 +1,23 @@
 #!/bin/sh
-# Generate new SSH host keys
+set -e
+
+# Logging function
+log() {
+    echo "$(date +"%Y-%m-%d %T") - $1"
+}
+
+log "Generating new SSH host keys"
 ssh-keygen -A -f /workspace
 
-# Ensure that the ssh-user has a .ssh directory
+log "Ensuring ssh-user has a .ssh directory"
 mkdir -p /home/ssh-user/.ssh
 
-# Add files in workspace keys directroy to the users ssh authorized keys
-# if folder is empty, this will not fail
-find /workspace/keys -type f -exec cat {} >> /home/ssh-user/.ssh/authorized_keys \;
+log "Adding files in workspace keys directory to the user's ssh authorized keys"
+if find /workspace/keys -type f -exec cat {} >> /home/ssh-user/.ssh/authorized_keys \;; then
+    log "Authorized keys updated."
+else
+    log "No keys found in /workspace/keys."
+fi
 
-# Start the SSH server
+log "Starting the SSH server in the foreground"
 /usr/sbin/sshd -D -e
