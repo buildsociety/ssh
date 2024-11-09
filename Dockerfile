@@ -5,7 +5,7 @@ RUN apk upgrade --no-cache \
   && apk add --no-cache openssh-server tini \
   && mkdir -p /workspace/etc/ssh /workspace/keys \
   && addgroup -S ssh-user \
-  && adduser -s /bin/true -S ssh-user -G ssh-user \
+  && adduser -S ssh-user -G ssh-user \
   && chown -R ssh-user:ssh-user /workspace/ \
   && chmod 555 /entrypoint.sh
 USER ssh-user
